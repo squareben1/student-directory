@@ -38,9 +38,14 @@ puts "The students of Villains Academy"
 puts "-------------"
 end 
 
+# Added until loop as per 8.4, kept each_with_index as wanted to keep numbered list...until is unnecessary REMOVE
 def print(students)
-  students.each_with_index do |student, index|
+  counter = 0 
+  until counter == students.length 
+    students.each_with_index do |student, index|
     puts "#{index+1} #{student[:name]} (#{student[:cohort]} cohort)"
+    counter += 1
+  end 
   end 
 end 
 
@@ -53,7 +58,7 @@ def print_if_first_letter(students, letter)
   end 
 end 
 
-# Method to return students names under 12 chars
+# Method to return students w/ names under 12 chars
 def print_if_under_twelve(students)
   students.each do |student|
   if student[:name].length <= 12
@@ -68,6 +73,6 @@ end
 
 # nothing happens until we call the methods
 # students = input_students
-print_if_under_twelve(students)
 print_header
+print(students)
 print_footer(students)
