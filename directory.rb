@@ -1,18 +1,18 @@
 
-# #put all students into array 
-# students = [ 
-#   {name: "Dr. Hannibal Lecter", cohort: :november},
-#   {name: "Darth Vader", cohort: :november},
-#   {name: "Nurse Ratched", cohort: :november},
-#   {name: "Michael Corleone", cohort: :november},
-#   {name: "Alex DeLarge", cohort: :november},
-#   {name: "The Wicked Witch of the West", cohort: :november},
-#   {name: "Terminator", cohort: :november},
-#   {name: "Freddy Krueger", cohort: :november},
-#   {name: "The Joker", cohort: :november},
-#   {name: "Joffrey Baratheon", cohort: :november},
-#   {name: "Norman Bates", cohort: :november}
-# ]
+#put all students into array 
+students = [ 
+  {name: "Dr. Hannibal Lecter", cohort: :november, hobby: "Eating people"},
+  {name: "Darth Vader", cohort: :november, hobby: "evil"},
+  {name: "Nurse Ratched", cohort: :november, hobby: "evil"},
+  {name: "Michael Corleone", cohort: :november, hobby: "evil"},
+  {name: "Alex DeLarge", cohort: :november, hobby: "evil"},
+  {name: "The Wicked Witch of the West", cohort: :november, hobby: "evil"},
+  {name: "Terminator", cohort: :november, hobby: "evil"},
+  {name: "Freddy Krueger", cohort: :november, hobby: "evil"},
+  {name: "The Joker", cohort: :november, hobby: "evil"},
+  {name: "Joffrey Baratheon", cohort: :november, hobby: "evil"},
+  {name: "Norman Bates", cohort: :november, hobby: "evil"}
+]
 
 def input_students
   #create empty array
@@ -43,8 +43,8 @@ def input_students
 end 
 
 def print_header
-puts "The students of Villains Academy"
-puts "-------------"
+puts "The students of Villains Academy".center(100)
+puts "-------------".center(100)
 end 
 
 # Added until loop as per 8.4, kept each_with_index as wanted to keep numbered list...until is unnecessary REMOVE
@@ -52,7 +52,7 @@ def print(students)
   counter = 0 
   until counter == students.length 
     students.each_with_index do |student, index|
-    puts "#{index+1} #{student[:name]} (#{student[:cohort]} cohort)"
+    puts "#{index+1} #{student[:name]} (#{student[:cohort]} cohort), Hobby: #{student[:hobby]}".center(100)
     counter += 1
   end 
   end 
@@ -77,11 +77,11 @@ def print_if_under_twelve(students)
 end 
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students".center(100)
 end 
 
 # nothing happens until we call the methods
-students = input_students
+# students = input_students
 print_header
 print(students)
 print_footer(students)
