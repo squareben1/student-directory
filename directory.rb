@@ -1,18 +1,18 @@
 
 #put all students into array 
-students = [ 
-  {name: "Dr. Hannibal Lecter", cohort: :november, hobby: "Eating people"},
-  {name: "Darth Vader", cohort: :november, hobby: "evil"},
-  {name: "Nurse Ratched", cohort: :november, hobby: "evil"},
-  {name: "Michael Corleone", cohort: :november, hobby: "evil"},
-  {name: "Alex DeLarge", cohort: :november, hobby: "evil"},
-  {name: "The Wicked Witch of the West", cohort: :november, hobby: "evil"},
-  {name: "Terminator", cohort: :november, hobby: "evil"},
-  {name: "Freddy Krueger", cohort: :november, hobby: "evil"},
-  {name: "The Joker", cohort: :november, hobby: "evil"},
-  {name: "Joffrey Baratheon", cohort: :november, hobby: "evil"},
-  {name: "Norman Bates", cohort: :november, hobby: "evil"}
-]
+# students = [ 
+#   {name: "Dr. Hannibal Lecter", cohort: :november, hobby: "Eating people"},
+#   {name: "Darth Vader", cohort: :november, hobby: "evil"},
+#   {name: "Nurse Ratched", cohort: :november, hobby: "evil"},
+#   {name: "Michael Corleone", cohort: :november, hobby: "evil"},
+#   {name: "Alex DeLarge", cohort: :november, hobby: "evil"},
+#   {name: "The Wicked Witch of the West", cohort: :november, hobby: "evil"},
+#   {name: "Terminator", cohort: :november, hobby: "evil"},
+#   {name: "Freddy Krueger", cohort: :november, hobby: "evil"},
+#   {name: "The Joker", cohort: :november, hobby: "evil"},
+#   {name: "Joffrey Baratheon", cohort: :november, hobby: "evil"},
+#   {name: "Norman Bates", cohort: :november, hobby: "evil"}
+# ]
 
 def input_students
   students = []
@@ -121,9 +121,36 @@ def print_footer(students)
   end 
 end 
 
+def interactive_menu
+  students = []
+  loop do 
+  puts "Please select: "
+
+  puts "1. Input the students"
+  puts "2. Show the students"
+
+  puts "9. Exit"
+  selection = gets.chomp
+  
+    case selection 
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print(students)
+      print_footer(students)
+    when "9"
+      exit
+    else 
+      puts "I don't know what you meant, try again: "
+    end 
+  end 
+end 
+
 # nothing happens until we call the methods
 # students = input_students
-print_header
-print(students)
-print_by_cohort(students)
-print_footer(students)
+# print_header
+interactive_menu
+# print(students)
+# print_by_cohort(students)
+# print_footer(students)
