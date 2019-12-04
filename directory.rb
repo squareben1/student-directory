@@ -1,18 +1,18 @@
 
 #put all students into array 
-# students = [ 
-#   {name: "Dr. Hannibal Lecter", cohort: :november, hobby: "Eating people"},
-#   {name: "Darth Vader", cohort: :november, hobby: "evil"},
-#   {name: "Nurse Ratched", cohort: :november, hobby: "evil"},
-#   {name: "Michael Corleone", cohort: :november, hobby: "evil"},
-#   {name: "Alex DeLarge", cohort: :november, hobby: "evil"},
-#   {name: "The Wicked Witch of the West", cohort: :november, hobby: "evil"},
-#   {name: "Terminator", cohort: :november, hobby: "evil"},
-#   {name: "Freddy Krueger", cohort: :november, hobby: "evil"},
-#   {name: "The Joker", cohort: :november, hobby: "evil"},
-#   {name: "Joffrey Baratheon", cohort: :november, hobby: "evil"},
-#   {name: "Norman Bates", cohort: :november, hobby: "evil"}
-# ]
+students = [ 
+  {name: "Dr. Hannibal Lecter", cohort: :november, hobby: "Eating people"},
+  {name: "Darth Vader", cohort: :november, hobby: "evil"},
+  {name: "Nurse Ratched", cohort: :november, hobby: "evil"},
+  {name: "Michael Corleone", cohort: :november, hobby: "evil"},
+  {name: "Alex DeLarge", cohort: :november, hobby: "evil"},
+  {name: "The Wicked Witch of the West", cohort: :november, hobby: "evil"},
+  {name: "Terminator", cohort: :november, hobby: "evil"},
+  {name: "Freddy Krueger", cohort: :november, hobby: "evil"},
+  {name: "The Joker", cohort: :november, hobby: "evil"},
+  {name: "Joffrey Baratheon", cohort: :november, hobby: "evil"},
+  {name: "Norman Bates", cohort: :november, hobby: "evil"}
+]
 
 def input_students
   students = []
@@ -83,7 +83,7 @@ end
 
 def print_by_cohort(students)
   puts "Input a cohort to print: "
-  cohort = gets.chomp.to_sym
+  cohort = gets.chomp.downcase.to_sym
 
   students.each do |student|
     if student[:cohort] == cohort 
@@ -122,8 +122,8 @@ def print_footer(students)
 end 
 
 # nothing happens until we call the methods
-students = input_students
+# students = input_students
 print_header
 print(students)
-# print_by_cohort(students)
+print_by_cohort(students)
 print_footer(students)
