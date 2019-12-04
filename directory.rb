@@ -112,7 +112,11 @@ def print_if_under_twelve(students)
 end 
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(100)
+  if students.length >1 
+    puts "Overall, we have #{students.count} great students".center(100)
+  else 
+    puts "Overall, we have #{students.count} great student".center(100)
+  end 
 end 
 
 # nothing happens until we call the methods
