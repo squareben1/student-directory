@@ -66,8 +66,8 @@ def input_students
 end 
 
 def print_header
-puts "The students of Villains Academy".center(100)
-puts "-------------".center(100)
+  puts "The students of Villains Academy".center(100)
+  puts "-------------".center(100) 
 end 
 
 # Added until loop as per 8.4, kept each_with_index as wanted to keep numbered list...until is unnecessary REMOVE
@@ -112,8 +112,10 @@ def print_if_under_twelve(students)
 end 
 
 def print_footer(students)
-  if students.length >1 
+  if students.length > 1 
     puts "Overall, we have #{students.count} great students".center(100)
+  elsif students.length < 1
+    nil 
   else 
     puts "Overall, we have #{students.count} great student".center(100)
   end 
