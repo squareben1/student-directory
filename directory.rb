@@ -1,36 +1,59 @@
 
 #put all students into array 
-students = [ 
-  {name: "Dr. Hannibal Lecter", cohort: :november, hobby: "Eating people"},
-  {name: "Darth Vader", cohort: :november, hobby: "evil"},
-  {name: "Nurse Ratched", cohort: :november, hobby: "evil"},
-  {name: "Michael Corleone", cohort: :november, hobby: "evil"},
-  {name: "Alex DeLarge", cohort: :november, hobby: "evil"},
-  {name: "The Wicked Witch of the West", cohort: :november, hobby: "evil"},
-  {name: "Terminator", cohort: :november, hobby: "evil"},
-  {name: "Freddy Krueger", cohort: :november, hobby: "evil"},
-  {name: "The Joker", cohort: :november, hobby: "evil"},
-  {name: "Joffrey Baratheon", cohort: :november, hobby: "evil"},
-  {name: "Norman Bates", cohort: :november, hobby: "evil"}
-]
+# students = [ 
+#   {name: "Dr. Hannibal Lecter", cohort: :november, hobby: "Eating people"},
+#   {name: "Darth Vader", cohort: :november, hobby: "evil"},
+#   {name: "Nurse Ratched", cohort: :november, hobby: "evil"},
+#   {name: "Michael Corleone", cohort: :november, hobby: "evil"},
+#   {name: "Alex DeLarge", cohort: :november, hobby: "evil"},
+#   {name: "The Wicked Witch of the West", cohort: :november, hobby: "evil"},
+#   {name: "Terminator", cohort: :november, hobby: "evil"},
+#   {name: "Freddy Krueger", cohort: :november, hobby: "evil"},
+#   {name: "The Joker", cohort: :november, hobby: "evil"},
+#   {name: "Joffrey Baratheon", cohort: :november, hobby: "evil"},
+#   {name: "Norman Bates", cohort: :november, hobby: "evil"}
+# ]
 
 def input_students
-  #create empty array
   students = []
+  months = {
+    "January" => :january, 
+    "February" => :february,
+    "March" => :march, 
+    "April" => :april, 
+    "May" => :may, 
+    "June" => :june, 
+    "July" => :july, 
+    "August" => :august, 
+    "September" => :september, 
+    "October" => :october, 
+    "November" => :november, 
+    "December" => :december, 
+    "" => :no
+  }
   # ask if user wants to add student record 
-  # while the choice is Y, repeat this code 
+  # while the choice is Y (or not blank), repeat this code 
   while true do 
-    puts "Type Y to create new student record? "
+    puts "Type Y to create new student record: "
     puts "Press Enter on empty field to exit."
     choice = gets.chomp 
     if !choice.empty? 
     # get a name from user
     puts "Type Name: "
     name = gets.chomp 
+      if name == "" 
+        name = "BLANK"
+      end 
     puts "Type their favourite hobby: "
-    hobby = gets. chomp
+    hobby = gets.chomp
+    puts "enter cohort: "
+    cohort = months[gets.chomp.capitalize]
+    while cohort == nil 
+        puts "Incorrect spelling, please enter cohort: "
+        cohort = months[gets.chomp.capitalize]
+      end 
 
-    students << {name: name, cohort: :november, hobby: hobby}
+    students << {name: name, cohort: cohort, hobby: hobby}
 
     puts "Now we have #{students.count} students"
   else 
@@ -52,7 +75,7 @@ def print(students)
   counter = 0 
   until counter == students.length 
     students.each_with_index do |student, index|
-    puts "#{index+1} #{student[:name]} (#{student[:cohort]} cohort), Hobby: #{student[:hobby]}".center(100)
+    puts "#{index+1} #{student[:name]} (#{student[:cohort].capitalize} cohort), Hobby: #{student[:hobby]}".center(100)
     counter += 1
   end 
   end 
@@ -62,7 +85,7 @@ end
 def print_if_first_letter(students, letter)
   students.each do |student, index|
   if student[:name][0] == letter
-    puts "Students with names beginning with #{letter}: #{student[:name]} (#{student[:cohort]} cohort)" 
+    puts "Students with names beginning with #{letter}: #{student[:name]} (#{student[:cohort]} cohort)"
   end 
   end 
 end 
@@ -81,7 +104,7 @@ def print_footer(students)
 end 
 
 # nothing happens until we call the methods
-# students = input_students
+students = input_students
 print_header
 print(students)
 print_footer(students)
