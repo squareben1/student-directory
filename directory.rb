@@ -81,6 +81,18 @@ def print(students)
   end 
 end 
 
+def print_by_cohort(students)
+  puts "Input a cohort to print: "
+  cohort = gets.chomp.to_sym
+
+  students.each do |student|
+    if student[:cohort] == cohort 
+      puts "#{student[:name]} (#{student[:cohort].capitalize} cohort),   Hobby: #{student[:hobby]}".center(100)
+    end
+  end 
+end 
+ 
+
 # Method to return names beginning with certain letter
 def print_if_first_letter(students, letter)
   students.each do |student, index|
@@ -106,5 +118,6 @@ end
 # nothing happens until we call the methods
 students = input_students
 print_header
-print(students)
+# print(students)
+print_by_cohort(students)
 print_footer(students)
