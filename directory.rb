@@ -36,7 +36,7 @@ def input_students
   while true do 
     puts "Type Y to create new student record: "
     puts "Press Enter on empty field to exit."
-    choice = gets.chomp 
+    choice = gets.strip 
     if !choice.empty? 
     # get a name from user
     puts "Type Name: "
@@ -122,6 +122,6 @@ end
 # nothing happens until we call the methods
 students = input_students
 print_header
-# print(students)
-print_by_cohort(students)
+print(students)
+# print_by_cohort(students)
 print_footer(students)
