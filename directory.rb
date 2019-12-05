@@ -68,6 +68,16 @@ def print_header
   puts "-------------".center(100) 
 end 
 
+def print_footer
+  if @students.length > 1 
+    puts "Overall, we have #{@students.count} great students".center(100)
+  elsif @students.length < 1
+    nil 
+  else 
+    puts "Overall, we have #{@students.count} great student".center(100)
+  end 
+end 
+
 # Added until loop as per 8.4, kept each_with_index as wanted to keep numbered list...until is unnecessary REMOVE
 def print_students_list
   counter = 0 
@@ -90,7 +100,6 @@ def print_by_cohort
   end 
 end 
  
-
 # Method to return names beginning with certain letter
 def print_if_first_letter(letter)
   @students.each do |student, index|
@@ -109,16 +118,7 @@ def print_if_under_twelve
   end 
 end 
 
-def print_footer
-  if @students.length > 1 
-    puts "Overall, we have #{@students.count} great students".center(100)
-  elsif @students.length < 1
-    nil 
-  else 
-    puts "Overall, we have #{@students.count} great student".center(100)
-  end 
-end 
-
+# Interactive menu methods--------------
 def print_menu
   puts "Please select: "
 
