@@ -41,14 +41,14 @@ def input_students
     if !choice.empty? 
     # get a name from user
     puts "Type Name: "
-    name = gets.chomp 
+    name = gets.capitalize.chomp 
       if name == "" 
         name = "BLANK"
       end 
     puts "Type their favourite hobby: "
-    hobby = gets.chomp
+    hobby = gets.capitalize.chomp
     puts "enter cohort: "
-    cohort = months[gets.chomp.capitalize]
+    cohort = months[gets.capitalize.chomp]
       while cohort == nil 
         puts "Incorrect spelling, please enter cohort: "
         cohort = months[gets.chomp.capitalize]
@@ -124,6 +124,7 @@ def print_menu
 
   puts "1. Input the students"
   puts "2. Show the students"
+  puts "3. Save the list to students.csv"
 
   puts "9. Exit"
 end 
@@ -134,12 +135,24 @@ def show_students
   print_footer
 end 
 
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student| 
+    student_data = [student[:name], student[:cohort], student[:hobby]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end 
+  file.close
+end 
+
 def process(selection)
   case selection
   when "1"
     input_students
   when "2"
     show_students
+  when "3"
+    save_students
   when "9"
     exit
   else 
