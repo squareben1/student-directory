@@ -69,7 +69,7 @@ def print_header
 end 
 
 # Added until loop as per 8.4, kept each_with_index as wanted to keep numbered list...until is unnecessary REMOVE
-def print
+def print_students_list
   counter = 0 
   until counter == @students.length 
     @students.each_with_index do |student, index|
@@ -130,26 +130,27 @@ end
 
 def show_students
   print_header
-  print
+  print_students_list
   print_footer
 end 
 
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else 
+    puts "I don't know what you meant, try again: "
+  end 
+end 
+
 def interactive_menu
-  
   loop do 
     print_menu
-    selection = gets.chomp
-  
-    case selection 
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "9"
-      exit
-    else 
-      puts "I don't know what you meant, try again: "
-    end 
+    process(gets.chomp)
   end 
 end 
 
