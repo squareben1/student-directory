@@ -37,21 +37,21 @@ def input_students
   while true do 
     puts "Type Y to create new student record: "
     puts "Press Enter on empty field to exit."
-    choice = gets.strip 
+    choice = STDIN.gets.strip 
     if !choice.empty? 
     # get a name from user
     puts "Type Name: "
-    name = gets.capitalize.chomp 
+    name = STDIN.gets.capitalize.chomp 
       if name == "" 
         name = "BLANK"
       end 
     puts "Type their favourite hobby: "
-    hobby = gets.capitalize.chomp
+    hobby = STDIN.gets.capitalize.chomp
     puts "enter cohort: "
-    cohort = months[gets.capitalize.chomp]
+    cohort = months[STDIN.gets.capitalize.chomp]
       while cohort == nil 
         puts "Incorrect spelling, please enter cohort: "
-        cohort = months[gets.chomp.capitalize]
+        cohort = months[STDIN.gets.chomp.downcase]
       end 
 
     @students << {name: name, cohort: cohort, hobby: hobby}
@@ -91,7 +91,7 @@ end
 
 def print_by_cohort
   puts "Input a cohort to print: "
-  cohort = gets.chomp.downcase.to_sym
+  cohort = STDIN.gets.chomp.downcase.to_sym
 
   @students.each do |student|
     if student[:cohort] == cohort 
@@ -99,7 +99,7 @@ def print_by_cohort
     end
   end 
 end 
- 
+
 # Method to return names beginning with certain letter
 def print_if_first_letter(letter)
   @students.each do |student, index|
@@ -146,13 +146,25 @@ def save_students
   file.close
 end 
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line| 
     name, cohort, hobby = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym, hobby: hobby}
   end 
   file.close
+end 
+
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil? 
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else 
+    puts "Sorry #{filename} doesn't exist."
+    exit 
+  end 
 end 
 
 def process(selection)
@@ -164,6 +176,7 @@ def process(selection)
   when "3"
     save_students
   when "4"
+    @students = []
     load_students
   when "9"
     exit
@@ -175,13 +188,14 @@ end
 def interactive_menu
   loop do 
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end 
 end 
 
 # nothing happens until we call the methods
 # students = input_students
 # print_header
+try_load_students
 interactive_menu
 # print(students)
 # print_by_cohort(students)
