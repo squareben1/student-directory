@@ -14,8 +14,9 @@
 #   {name: "Norman Bates", cohort: :november, hobby: "evil"}
 # ]
 
+@students = []
+
 def input_students
-  students = []
   months = {
     "January" => :january, 
     "February" => :february,
@@ -48,21 +49,18 @@ def input_students
     hobby = gets.chomp
     puts "enter cohort: "
     cohort = months[gets.chomp.capitalize]
-    while cohort == nil 
+      while cohort == nil 
         puts "Incorrect spelling, please enter cohort: "
         cohort = months[gets.chomp.capitalize]
       end 
 
-    students << {name: name, cohort: cohort, hobby: hobby}
+    @students << {name: name, cohort: cohort, hobby: hobby}
 
-    puts "Now we have #{students.count} students"
-  else 
-    break 
+    puts "Now we have #{@students.count} students"
+    else 
+      break 
+    end     
   end 
-    
-  end 
-    # return array of students
-    students 
 end 
 
 def print_header
@@ -71,21 +69,21 @@ def print_header
 end 
 
 # Added until loop as per 8.4, kept each_with_index as wanted to keep numbered list...until is unnecessary REMOVE
-def print(students)
+def print
   counter = 0 
-  until counter == students.length 
-    students.each_with_index do |student, index|
+  until counter == @students.length 
+    @students.each_with_index do |student, index|
     puts "#{index+1} #{student[:name]} (#{student[:cohort].capitalize} cohort), Hobby: #{student[:hobby]}".center(100)
     counter += 1
   end 
   end 
 end 
 
-def print_by_cohort(students)
+def print_by_cohort
   puts "Input a cohort to print: "
   cohort = gets.chomp.downcase.to_sym
 
-  students.each do |student|
+  @students.each do |student|
     if student[:cohort] == cohort 
       puts "#{student[:name]} (#{student[:cohort].capitalize} cohort),   Hobby: #{student[:hobby]}".center(100)
     end
@@ -94,8 +92,8 @@ end
  
 
 # Method to return names beginning with certain letter
-def print_if_first_letter(students, letter)
-  students.each do |student, index|
+def print_if_first_letter(letter)
+  @students.each do |student, index|
   if student[:name][0] == letter
     puts "Students with names beginning with #{letter}: #{student[:name]} (#{student[:cohort]} cohort)"
   end 
@@ -103,42 +101,50 @@ def print_if_first_letter(students, letter)
 end 
 
 # Method to return students w/ names under 12 chars
-def print_if_under_twelve(students)
-  students.each do |student|
+def print_if_under_twelve
+  @students.each do |student|
   if student[:name].length <= 12
     puts "Students with names shorter than 12 characters: #{student[:name]} (#{student[:cohort]} cohort)" 
   end 
   end 
 end 
 
-def print_footer(students)
-  if students.length > 1 
-    puts "Overall, we have #{students.count} great students".center(100)
-  elsif students.length < 1
+def print_footer
+  if @students.length > 1 
+    puts "Overall, we have #{@students.count} great students".center(100)
+  elsif @students.length < 1
     nil 
   else 
-    puts "Overall, we have #{students.count} great student".center(100)
+    puts "Overall, we have #{@students.count} great student".center(100)
   end 
 end 
 
-def interactive_menu
-  students = []
-  loop do 
+def print_menu
   puts "Please select: "
 
   puts "1. Input the students"
   puts "2. Show the students"
 
   puts "9. Exit"
-  selection = gets.chomp
+end 
+
+def show_students
+  print_header
+  print
+  print_footer
+end 
+
+def interactive_menu
+  
+  loop do 
+    print_menu
+    selection = gets.chomp
   
     case selection 
     when "1"
-      students = input_students
+      input_students
     when "2"
-      print_header
-      print(students)
-      print_footer(students)
+      show_students
     when "9"
       exit
     else 
