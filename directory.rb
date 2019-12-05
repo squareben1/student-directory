@@ -51,7 +51,7 @@ def input_students
     cohort = months[STDIN.gets.capitalize.chomp]
       while cohort == nil 
         puts "Incorrect spelling, please enter cohort: "
-        cohort = months[STDIN.gets.chomp.downcase]
+        cohort = months[STDIN.gets.downcase.chomp]
       end 
 
     @students << {name: name, cohort: cohort, hobby: hobby}
