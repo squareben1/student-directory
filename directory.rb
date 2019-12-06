@@ -177,23 +177,23 @@ def ask_load_file
 end 
 
 def save_students(filename="students.csv")
-  file = File.open(filename, "w")
+  file = File.open(filename, "w") do |file| #this BLOCK does what it needs to do in the |file| then closes the file without explicitly saying closefile 
   @students.each do |student| 
     student_data = [student[:name], student[:cohort], student[:hobby]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end 
-  file.close
+end 
 end 
 
-def load_students(filename="students.csv") #ADD DEFAULT BACK
-  file = File.open(filename, "r")
+def load_students(filename="students.csv")
+  file = File.open(filename, "r") do |file|
   file.readlines.each do |line| 
     name, cohort, hobby = line.chomp.split(',')
     
     add_hash(name, cohort, hobby)
   end 
-  file.close
+end 
 end 
 
 def try_load_students
