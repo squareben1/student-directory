@@ -15,8 +15,26 @@
 # ]
 
 @students = []
+@savefile = ""
+@loadfile = ""
 
-def input_students
+# gets new record, asks if want to add another student ONCE DONE, repeats if yes 
+def ask_add_student
+  while true do 
+    add_student_record
+    puts "Type Y to create another new student record: "
+    puts "Otherwise press Enter on empty field to exit."
+    choice = STDIN.gets.strip 
+    if !choice.empty? 
+    add_student_record
+    else 
+      break 
+    end     
+  end 
+end 
+
+# code to add new student, split from larger method for simplicity 
+def add_student_record
   months = {
     "January" => :january, 
     "February" => :february,
@@ -32,15 +50,8 @@ def input_students
     "December" => :december, 
     "" => :no
   }
-  # ask if user wants to add student record 
-  # while the choice is Y (or not blank), repeat this code 
-  while true do 
-    puts "Type Y to create new student record: "
-    puts "Press Enter on empty field to exit."
-    choice = STDIN.gets.strip 
-    if !choice.empty? 
-    # get a name from user
-    puts "Type Name: "
+
+  puts "Type Name: "
     name = STDIN.gets.capitalize.chomp 
       if name == "" 
         name = "BLANK"
@@ -54,13 +65,12 @@ def input_students
         cohort = months[STDIN.gets.downcase.chomp]
       end 
 
-    @students << {name: name, cohort: cohort, hobby: hobby}
-
+    add_hash(name, cohort, hobby)
     puts "Now we have #{@students.count} students"
-    else 
-      break 
-    end     
-  end 
+end 
+
+def add_hash(name, cohort, hobby)
+  @students << {name: name, cohort: cohort.to_sym, hobby: hobby}
 end 
 
 def print_header
@@ -122,7 +132,7 @@ end
 def print_menu
   puts "Please select: "
 
-  puts "1. Input the students"
+  puts "1. Input new student"
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
@@ -136,8 +146,38 @@ def show_students
   print_footer
 end 
 
-def save_students
-  file = File.open("students.csv", "w")
+def ask_save_file
+  puts "Please input name of file you wish to save: "
+  @savefile = STDIN.gets.chomp 
+  filename = @savefile
+  if filename.nil? 
+     exit 
+  elsif File.exists?(filename)
+    save_students(filename)
+    puts "Saved #{@students.count} to #{filename}"
+  else 
+    save_students
+    puts "Sorry that file doesn't exist. Saved #{@students.count} to students.csv instead"
+    exit 
+  end 
+  
+end 
+
+def ask_load_file
+  puts "Please input name of file you wish to load: "
+  @loadfile = STDIN.gets.chomp 
+  filename = @loadfile
+  if File.exists?(filename)
+    load_students(filename)
+    puts "loaded #{@students.count} from #{filename}"
+  else 
+    load_students
+    puts "Sorry that file doesn't exist. Loaded #{@students.count} from students.csv instead" 
+  end 
+end 
+
+def save_students(filename="students.csv")
+  file = File.open(filename, "w")
   @students.each do |student| 
     student_data = [student[:name], student[:cohort], student[:hobby]]
     csv_line = student_data.join(",")
@@ -146,19 +186,22 @@ def save_students
   file.close
 end 
 
-def load_students(filename = "students.csv")
+def load_students(filename="students.csv") #ADD DEFAULT BACK
   file = File.open(filename, "r")
   file.readlines.each do |line| 
     name, cohort, hobby = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym, hobby: hobby}
+    
+    add_hash(name, cohort, hobby)
   end 
   file.close
 end 
 
 def try_load_students
   filename = ARGV.first
-  return if filename.nil? 
-  if File.exists?(filename)
+  if filename.nil? 
+    load_students
+    puts "Loaded #{@students.count} from students.csv" 
+  elsif File.exists?(filename)
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
   else 
@@ -170,18 +213,21 @@ end
 def process(selection)
   case selection
   when "1"
-    input_students
+    ask_add_student
   when "2"
     show_students
   when "3"
-    save_students
+    ask_save_file
+    puts "Students saved."
   when "4"
     @students = []
-    load_students
+    ask_load_file
+    puts "Students loaded."
   when "9"
+    puts "Goodbye :)"
     exit
   else 
-    puts "I don't know what you meant, try again: "
+    puts "I don't know what you mean, please try again: "
   end 
 end 
 
