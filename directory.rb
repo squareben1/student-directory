@@ -185,6 +185,7 @@ def save_students(filename="students.csv")
   end 
 end 
 end 
+
 #DUPLICATE METHOD IN CASE OF SCREW UP 
 # def save_students(filename="students.csv")
 #   file = File.open(filename, "w") do |file| #this BLOCK does what it needs to do in the |file| then closes the file without explicitly saying closefile 
@@ -203,7 +204,6 @@ def load_students(filename="students.csv")
   end 
 end 
  
-
 #DUPLICATE 
 # def load_students(filename="students.csv")
 #   file = File.open(filename, "r") do |file|
