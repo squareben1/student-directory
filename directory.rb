@@ -14,6 +14,7 @@
 #   {name: "Norman Bates", cohort: :november, hobby: "evil"}
 # ]
 
+require 'csv'
 @students = []
 @savefile = ""
 @loadfile = ""
@@ -157,8 +158,7 @@ def ask_save_file
     puts "Saved #{@students.count} to #{filename}"
   else 
     save_students
-    puts "Sorry that file doesn't exist. Saved #{@students.count} to students.csv instead"
-    exit 
+    puts "Sorry that file doesn't exist. Saved #{@students.count} to students.csv instead" 
   end 
   
 end 
@@ -173,28 +173,47 @@ def ask_load_file
   else 
     load_students
     puts "Sorry that file doesn't exist. Loaded #{@students.count} from students.csv instead" 
+    
   end 
 end 
 
 def save_students(filename="students.csv")
-  file = File.open(filename, "w") do |file| #this BLOCK does what it needs to do in the |file| then closes the file without explicitly saying closefile 
-  @students.each do |student| 
+  CSV.open("./#{filename}", "w") do |line|
+    @students.each do |student| 
     student_data = [student[:name], student[:cohort], student[:hobby]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    line << student_data 
   end 
 end 
 end 
+#DUPLICATE METHOD IN CASE OF SCREW UP 
+# def save_students(filename="students.csv")
+#   file = File.open(filename, "w") do |file| #this BLOCK does what it needs to do in the |file| then closes the file without explicitly saying closefile 
+#   @students.each do |student| 
+#     student_data = [student[:name], student[:cohort], student[:hobby]]
+#     csv_line = student_data.join(",")
+#     file.puts csv_line
+#   end 
+# end 
+# end 
 
 def load_students(filename="students.csv")
-  file = File.open(filename, "r") do |file|
-  file.readlines.each do |line| 
-    name, cohort, hobby = line.chomp.split(',')
-    
-    add_hash(name, cohort, hobby)
+  CSV.foreach("./#{filename}") do |row| 
+  name, cohort, hobby = row
+  add_hash(name, cohort, hobby)
   end 
 end 
-end 
+ 
+
+#DUPLICATE 
+# def load_students(filename="students.csv")
+#   file = File.open(filename, "r") do |file|
+#   file.readlines.each do |line| 
+#     name, cohort, hobby = line.chomp.split(',')
+    
+#     add_hash(name, cohort, hobby)
+#   end 
+# end 
+# end 
 
 def try_load_students
   filename = ARGV.first
@@ -241,7 +260,7 @@ end
 # nothing happens until we call the methods
 # students = input_students
 # print_header
-try_load_students
+# try_load_students
 interactive_menu
 # print(students)
 # print_by_cohort(students)
